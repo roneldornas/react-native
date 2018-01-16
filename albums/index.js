@@ -1,7 +1,7 @@
 // The first thing to do is import alibrary to help create a component
 import React from 'react';
 import { AppRegistry } from 'react-native';
-import Header from './src/componets/header';
+import Header from './src/componets/Header';
 
 // Create a component
 const App = () => ( 
