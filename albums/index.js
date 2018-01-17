@@ -1,11 +1,16 @@
 // The first thing to do is import alibrary to help create a component
 import React from 'react';
-import { AppRegistry } from 'react-native';
-import Header from './src/componets/Header';
+import { AppRegistry, View } from 'react-native';
+
+import Header from './src/components/Header';
+import AlbumList from './src/components/AlbumList';
 
 // Create a component
-const App = () => ( 
-    <Header headerText={'Albums'} />
+const App = () => (
+    <View style={{ flex: 1 }}>
+        <Header headerText={'Albums'} />
+        <AlbumList />
+    </View>
 );
 
 // Render it to device
