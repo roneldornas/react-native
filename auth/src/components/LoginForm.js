@@ -1,8 +1,26 @@
 import React, { Component } from 'react';
+import { Text } from 'react-native';
+import Firebase from 'firebase';
 import { Button, Card, CardSection, Input } from './common';
 
 class LoginForm extends Component {
-    state = { email: '', password: '' };
+    state = { email: '', password: '', error: '' };
+
+    onButtonPress() {
+        const { email, password } = this.state;
+
+        this.setState({ error: '' });
+
+// Password deve ter no mínimo 6 caracteres ou ocorrerá erro do Firebase
+
+        Firebase.auth().signInWithEmailAndPassword(email, password)
+        .catch(() => {
+            Firebase.auth().createUserWithEmailAndPassword(email, password)
+            .catch(() => {
+                this.setState({ error: 'Authentication Failed' });
+            });
+        });
+    }
     
     render() {
         return (
@@ -13,7 +31,7 @@ class LoginForm extends Component {
                     label="Email"
                     placeholder="user@email.com"
                     value={this.state.email} 
-                    onChangeText={text => this.setState({ email: text  })}
+                    onChangeText={text => this.setState({ email: text })}
                     />
                 </CardSection>
                 <CardSection>
@@ -26,8 +44,11 @@ class LoginForm extends Component {
                     />
                 </CardSection>
 
+                <Text style={styles.errorTextStyle} >
+                    {this.state.error}
+                </Text>
                 <CardSection>
-                    <Button>
+                    <Button onPress={this.onButtonPress.bind(this)}>
                         Log In
                     </Button>
                 </CardSection>
@@ -36,5 +57,13 @@ class LoginForm extends Component {
         );
     }
 }
+
+const styles = {
+    errorTextStyle: {
+        fontSize: 20,
+        alignSelf: 'center',
+        color: 'red'
+    }
+};
 
 export default LoginForm;
