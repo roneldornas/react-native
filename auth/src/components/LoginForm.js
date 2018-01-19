@@ -14,11 +14,27 @@ class LoginForm extends Component {
 // Password deve ter no mínimo 6 caracteres ou ocorrerá erro do Firebase
 
         Firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(this.onLogingSuccess.bind(this))
         .catch(() => {
             Firebase.auth().createUserWithEmailAndPassword(email, password)
-            .catch(() => {
-                this.setState({ error: 'Authentication Failed' });
-            });
+            .then(this.onLogingSuccess.bind(this))
+            .catch(this.onLoginFail.bind(this));
+        });
+    }
+
+    onLoginFail() {
+        this.setState({
+            loading: false,
+            error: 'Authentication Failed'
+        });
+    }
+
+    onLogingSuccess() {
+        this.setState({
+            loading: false,
+            email: '',
+            password: '',
+            error: ''
         });
     }
 
