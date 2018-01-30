@@ -12,14 +12,12 @@ class EmployeeList extends Component {
 
          this.createDataSource(this.props);
     }
-
     componentWillReceiveProps(nextProps) {
-        //nextProps re the nextet of props that this component
+        //nextProps are the next state of props that this component
         //will be rendered with
         //this.props still the old props
         this.createDataSource(nextProps); 
     }
-
     createDataSource() {
         const ds = new ListView.DataSource({
             rowHasChanged: (r1, r2) => r1 !== r2
@@ -27,19 +25,15 @@ class EmployeeList extends Component {
 
         this.DataSource = ds.cloneWithRows(this.props.employees);        
     }
-
     renderRow(employee) {
         return <ListItem employee={employee} />;
     }
-
     renderItem({ item }) {
         return <ListItem employee={item} />;
     }
-
     render() {
         console.log(this.props);
         return (
-           
             <ListView 
                 enableEmptySections
                 dataSource={this.dataSource}
